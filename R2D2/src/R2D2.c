@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include "../inc/config.h"
 #include "../inc/PR_buttons.h"
-
+#include "../inc/PR_PWM.h"
 // TODO: insert other include files here
 
 // TODO: insert other definitions and declarations here
@@ -26,9 +26,17 @@ int main(void) {
     config();
 
     while(1) {
-    	if (stop_button_active()) printf("Boton Stop Apretado\n");
-    	if (knifes_tower_on_top()) printf("Tope de Cierra\n");
-    	if (base_on_init()) printf("Base en estado inicial\n");
+    	if (stop_button_active());
+    	if (knifes_tower_on_top()) {
+    		moveteMotorPWM(3, 1, 1);
+    	} else {
+    		moveteMotorPWM(3, 0, 1);
+    	}
+    	if (base_on_init()) {
+    		moveteMotorPWM(3, 1, 0);
+    	} else {
+    		moveteMotorPWM(3, 0, 0);
+    	}
     }
     return 0 ;
 }

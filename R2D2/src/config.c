@@ -9,9 +9,11 @@
 #include "../inc/DR_PLL.h"
 #include "../inc/DR_systick.h"
 #include "../inc/DR_buttons.h"
+#include "../inc/DR_PWM.h"
 
 void config() {
 	InicializarPLL();
-	SysTickInit();
+	SysTick_Init();
 	init_buttons();
+	Init_PWM();
 }

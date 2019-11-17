@@ -30,9 +30,9 @@ void init_buttons() {
 
 void button_state_hw( void )
 {
-	stop_button.state = GPIO_Get(STOP_BUTTON);
-	knifes_tower_top.state = GPIO_Get(KNIFES_TOWER_TOP_BUTTON);
-	base_init.state = GPIO_Get(BASE_INIT_BUTTON);
+	stop_button.state = !GPIO_Get(STOP_BUTTON);
+	knifes_tower_top.state = !GPIO_Get(KNIFES_TOWER_TOP_BUTTON);
+	base_init.state = !GPIO_Get(BASE_INIT_BUTTON);
 }
 
 void filter_bounce(volatile button_state* button) {
