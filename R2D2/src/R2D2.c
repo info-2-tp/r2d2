@@ -15,20 +15,20 @@
 #include <cr_section_macros.h>
 
 #include <stdio.h>
+#include "../inc/config.h"
+#include "../inc/PR_buttons.h"
 
 // TODO: insert other include files here
 
 // TODO: insert other definitions and declarations here
 
 int main(void) {
+    config();
 
-    printf("Hello World\n");
-
-    // Force the counter to be placed into memory
-    volatile static int i = 0 ;
-    // Enter an infinite loop, just incrementing a counter
     while(1) {
-        i++ ;
+    	if (stop_button_active()) printf("Boton Stop Apretado\n");
+    	if (knifes_tower_on_top()) printf("Tope de Cierra\n");
+    	if (base_on_init()) printf("Base en estado inicial\n");
     }
     return 0 ;
 }
