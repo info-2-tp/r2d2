@@ -18,36 +18,27 @@
 #include "../inc/config.h"
 #include "../inc/PR_buttons.h"
 #include "../inc/PR_PWM.h"
+#include "../inc/actions.h"
+#include "../inc/states.h"
+
+#define FOREVER 1
+int current_state = PREPARE;
 // TODO: insert other include files here
 
 // TODO: insert other definitions and declarations here
+void init_machine() {
+    knifes_stop();
+    move_knife_tower_up();
+    move_base_bottom();
+    current_state = PREPARE;
+    printf("ESTADO --> PREPARE\n");
+}
 
 int main(void) {
     config();
-
-    while(1) {
-    	//for (int i = 0; i < 10000; i++);
-
-    	if (stop_button_active()) {
-    		turnOnPWM(ON);
-    		//printf("STOP!!!\n");
-    	} else {
-    		turnOnPWM(OFF);
-    	}
-    	if (knifes_tower_on_top()) {
-    		//moveteMotorPWM(TOWER_MOTOR, ON, UP);
-    		//printf("CUCHILLAS!!!\n");
-    	} else {
-    		//moveteMotorPWM(TOWER_MOTOR, OFF, DOWN);
-    	}
-    	if (base_on_init()) {
-    		moveteMotorPWM(BASE_MOTOR, ON, IZQ);
-    		moveteMotorPWM(TOWER_MOTOR, ON, IZQ);
-    		//printf("BASE!!!\n");
-    	} else {
-    		moveteMotorPWM(BASE_MOTOR, ON, DER);
-    		moveteMotorPWM(TOWER_MOTOR, ON, DER);
-    	}
+    init_machine();
+    while(FOREVER) {
+    	state_machine();
     }
     return 0 ;
 }
