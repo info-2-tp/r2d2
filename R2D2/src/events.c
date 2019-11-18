@@ -1,7 +1,10 @@
 //
 // Created by marcelo on 2/11/19.
 //
-char base_bottom() {
+
+#include "../inc/PR_buttons.h"
+
+char base_back() {
     return 0;
 }
 
@@ -9,20 +12,20 @@ char base_middle() {
     return 0;
 }
 
-char base_top() {
-    return 0;
+char base_front() {
+    return base_on_init();
 }
 
-char stop_button() {
-    return 0;
+char emergency_button() {
+    return stop_button_active();
 }
 
 char knifes_top() {
-    return 0;
+    return knifes_tower_on_top();
 }
 
 char run_button() {
-    return 0;
+    return run_button_active();
 }
 
 char knifes_are_ready() {

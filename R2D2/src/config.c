@@ -10,10 +10,12 @@
 #include "../inc/DR_systick.h"
 #include "../inc/DR_buttons.h"
 #include "../inc/DR_PWM.h"
+#include "../inc/PR_timer.h"
 
 void config() {
 	InicializarPLL();
 	SysTick_Init();
+	initTimer();
 	init_buttons();
 	Init_PWM();
 }

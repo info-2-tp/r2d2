@@ -3,36 +3,42 @@
 //
 #include <stdio.h>
 #include "../inc/actions.h"
+#include "../inc/DR_tipos.h"
+#include "../inc/PR_PWM.h"
 
 extern routines_t routines;
+extern int cube_size;
+extern routines_t routines;
+extern unsigned char has_data;
+extern char current_cut;
 
 void knifes_stop() {
-    printf("Parar cuchillas\n");
+   moveteMotorPWM(KNIFES_MOTOR, OFF, IZQ);
 }
 void knifes_run() {
-    printf("arrancar cuchillas\n");
+	moveteMotorPWM(KNIFES_MOTOR, ON, IZQ);
 }
 void move_knife_tower_up() {
-    printf("Mover torre hacia arriba\n");
+	moveteMotorPWM(TOWER_MOTOR, ON, UP);
 }
 void move_knife_tower_down() {
-    printf("Mover torre hacia abajo\n");
+	moveteMotorPWM(TOWER_MOTOR, ON, UP);
 }
 void knife_tower_stop() {
-    printf("Parar torre\n");
+	moveteMotorPWM(TOWER_MOTOR, OFF, UP);
 }
 
-void move_base_bottom() {
-    printf("Mover base hacia el inicio\n");
+void move_base_back() {
+	moveteMotorPWM(BASE_MOTOR, ON, BACK);
 }
 void move_base_middle() {
     printf("Mover base hacia el medio\n");
 }
-void move_base_top() {
-    printf("Mover base hacia el final\n");
+void move_base_front() {
+	moveteMotorPWM(BASE_MOTOR, ON, FRONT);
 }
 void base_stop() {
-    printf("Parar Base\n");
+	moveteMotorPWM(BASE_MOTOR, OFF, IZQ);
 }
 
 int measure_size() {
@@ -63,9 +69,7 @@ void send_ack_to_obi_wan() {
 }
 
 void stop_all() {
-    knifes_stop();
-    base_stop();
-    knife_tower_stop();
+    turnOnPWM(OFF);
 };
 
 cuts_t calculate_cuts() {

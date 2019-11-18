@@ -22,6 +22,7 @@
 *	\date 03-11-2019 01:34:46
 */
 void state_machine();
+void init_machine();
 
 void init_state();
 void prepare_state();

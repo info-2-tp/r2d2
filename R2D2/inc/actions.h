@@ -36,20 +36,15 @@ typedef struct {
     routine_t *routines;
 } routines_t;
 
-extern int cube_size;
-extern routines_t routines;
-extern unsigned char has_data;
-extern char current_cut;
-
 void knifes_stop();
 void knifes_run();
 void move_knife_tower_up();
 void move_knife_tower_down();
 void knife_tower_stop();
 
-void move_base_bottom();
+void move_base_back();
 void move_base_middle();
-void move_base_top();
+void move_base_front();
 void base_stop();
 
 int measure_size();

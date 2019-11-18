@@ -99,33 +99,45 @@ void EncenderPWM(uint8_t motor, int estado)
 	switch(motor)
 	{
 		case PWM1:
-			PWM->PWM1MR1 = pulso;	//Update MR1 with new value
-			PWM->LER_ENA1 = 1;			//Load the MR1 new value at start of next cycle
+			if (pulso != PWM->PWM1MR1) {
+				PWM->PWM1MR1 = pulso;	//Update MR1 with new value
+				PWM->LER_ENA1 = 1;			//Load the MR1 new value at start of next cycle
+			}
 			break;
 
 		case PWM2:
-			PWM->PWM1MR2 = pulso;
-			PWM->LER_ENA2 = 1;
+			if (pulso != PWM->PWM1MR2) {
+				PWM->PWM1MR2 = pulso;	//Update MR1 with new value
+				PWM->LER_ENA2 = 1;			//Load the MR1 new value at start of next cycle
+			}
 			break;
 
 		case PWM3:
-			PWM->PWM1MR3 = pulso;
-			PWM->LER_ENA3 = 1;
+			if (pulso != PWM->PWM1MR3) {
+				PWM->PWM1MR3 = pulso;	//Update MR1 with new value
+				PWM->LER_ENA3 = 1;			//Load the MR1 new value at start of next cycle
+			}
 			break;
 
 		case PWM4:
-			PWM->PWM1MR4 = pulso;
-			PWM->LER_ENA4 = 1;
+			if (pulso != PWM->PWM1MR4) {
+				PWM->PWM1MR4 = pulso;	//Update MR1 with new value
+				PWM->LER_ENA4 = 1;			//Load the MR1 new value at start of next cycle
+			}
 			break;
 
 		case PWM5:
-			PWM->PWM1MR5 = pulso;
-			PWM->LER_ENA5 = 1;
+			if (pulso != PWM->PWM1MR5) {
+				PWM->PWM1MR5 = pulso;	//Update MR1 with new value
+				PWM->LER_ENA5 = 1;			//Load the MR1 new value at start of next cycle
+			}
 			break;
 
 		case PWM6:
-			PWM->PWM1MR6 = pulso;
-			PWM->LER_ENA6 = 1;
+			if (pulso != PWM->PWM1MR6) {
+				PWM->PWM1MR6 = pulso;	//Update MR1 with new value
+				PWM->LER_ENA6 = 1;			//Load the MR1 new value at start of next cycle
+			}
 			break;
 	}
 }

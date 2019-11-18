@@ -16,4 +16,6 @@ uint8_t knifes_tower_on_top();
 
 uint8_t base_on_init();
 
+uint8_t run_button_active();
+
 #endif /* PR_BUTTONS_H_ */

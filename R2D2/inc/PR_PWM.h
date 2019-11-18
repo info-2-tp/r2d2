@@ -4,8 +4,12 @@
 #define UP 1
 #define DOWN 0
 
-#define BASE_MOTOR 2
-#define TOWER_MOTOR 4
+#define FRONT 0
+#define BACK 1
+
+#define BASE_MOTOR   2
+#define KNIFES_MOTOR 3
+#define TOWER_MOTOR  4
 
 void moveteMotorPWM(int motor,int estado,int direccion);
 

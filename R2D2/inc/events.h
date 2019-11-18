@@ -5,11 +5,11 @@
 #ifndef STATES_MACHINE_EVENTS_H
 #define STATES_MACHINE_EVENTS_H
 
-char base_bottom();
+char base_back();
 char base_middle();
-char base_top();
+char base_front();
 char knifes_top();
-char stop_button();
+char emergency_button();
 char run_button();
 char knifes_are_ready();
 char knifes_is_there(unsigned short position);
