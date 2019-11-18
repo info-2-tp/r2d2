@@ -4,23 +4,34 @@
 
 void moveteMotorPWM(int motor,int estado,int direccion)
 {
-	if (estado == 1)
-	{
-		GPIO_Set(2,7,0);//enable en  LOW
+	switch(motor) {
+	case PWM1:
+		buffer_salidas.PWM_1 = estado;
+		buffer_salidas.PWM_DIR_1 = direccion;
+		break;
+	case PWM2:
+			buffer_salidas.PWM_2 = estado;
+			buffer_salidas.PWM_DIR_2 = direccion;
+			break;
+	case PWM3:
+			buffer_salidas.PWM_3 = estado;
+			buffer_salidas.PWM_DIR_3 = direccion;
+			break;
+	case PWM4:
+			buffer_salidas.PWM_4 = estado;
+			buffer_salidas.PWM_DIR_4 = direccion;
+			break;
+	case PWM5:
+			buffer_salidas.PWM_5 = estado;
+			buffer_salidas.PWM_DIR_5 = direccion;
+			break;
+	case PWM6:
+			buffer_salidas.PWM_6 = estado;
+			buffer_salidas.PWM_DIR_6 = direccion;
+			break;
 	}
-	else
-	{
-		GPIO_Set(2,7,1);//enable en  LOW
-	}
+}
 
-	if(!direccion)
-	{
-		GPIO_Set(4,28,0);//direccion del motor
-	}
-	else
-	{
-		GPIO_Set(4,28,1);//direccion del motor
-	}
-
-	buffer_salidas.PWM_2 = estado;
+void turnOnPWM(uint8_t on) {
+	buffer_salidas.PWM_ENABLE = on;
 }

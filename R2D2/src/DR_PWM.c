@@ -3,9 +3,14 @@
 
 volatile Buffer_t buffer_salidas;
 
+#define PULSE_ON 500
+#define PULSE_OFF 0
+
 void Init_PWM()
 {
 	*DIR_PCONP |= (1<<6); 		// PowerPWM (PCPWM1 == 6)
+
+	buffer_salidas.PWM_ENABLE = 1;
 
 	//PCLKSEL0 &= ~(3<<12);	//PCLK_PWM1 ponemos los 2 bits en 1 para habilitarlo
 
@@ -54,28 +59,42 @@ void Init_PWM()
 
 
 	//GPIO DIRECCION MOTOR PASO A PASO TORRE
-	GPIO_Pinsel(DIR_TORRE,PINSEL_GPIO); //configuro como pulso digital de entrada o salida
-	//GPIO_Mode(DIR,PINMODE_PULLDOWN); //configuro el pin como pull up
-	GPIO_Dir(DIR_TORRE,OUTPUT); //configuro el pin como salida
+	GPIO_Pinsel(DIR_PWM4,PINSEL_GPIO); //configuro como pulso digital de entrada o salida
+	GPIO_Dir(DIR_PWM4,OUTPUT); //configuro el pin como salida
 
 	//GPIO DIRECCION MOTOR PASO A PASO BASE
-	GPIO_Pinsel(DIR_BASE,PINSEL_GPIO); //configuro como pulso digital de entrada o salida
-	//GPIO_Mode(DIR,PINMODE_PULLDOWN); //configuro el pin como pull up
-	GPIO_Dir(DIR_BASE,OUTPUT); //configuro el pin como salida
+	GPIO_Pinsel(DIR_PWM2,PINSEL_GPIO); //configuro como pulso digital de entrada o salida
+	GPIO_Dir(DIR_PWM2,OUTPUT); //configuro el pin como salida
 
 	//GPIO ENABLE PWM
 	GPIO_Pinsel(ENABLE_PWM,PINSEL_GPIO); //configuro como pulso digital de entrada o salida
-	//GPIO_Mode(ENABLE_PWM,PINMODE_PULLUP); //configuro el pin como pull up
 	GPIO_Dir(ENABLE_PWM,OUTPUT); //configuro el pin como salida
+}
+
+void EncenderDireccionPWM(uint8_t motor, uint8_t direciotn) {
+	switch(motor) {
+	case PWM1:
+		GPIO_Set(DIR_PWM1, direciotn);break;
+	case PWM2:
+		GPIO_Set(DIR_PWM2, direciotn);break;
+	case PWM3:
+		GPIO_Set(DIR_PWM3, direciotn);break;
+	case PWM4:
+		GPIO_Set(DIR_PWM4, direciotn);break;
+	case PWM5:
+		GPIO_Set(DIR_PWM5, direciotn);break;
+	case PWM6:
+		GPIO_Set(DIR_PWM6, direciotn);break;
+	}
 }
 
 void EncenderPWM(uint8_t motor, int estado)
 {
 	int pulso;
 	if(estado == ON)
-		pulso = 500;
+		pulso = PULSE_ON;
 	else
-		pulso = 0;
+		pulso = PULSE_OFF;
 
 	switch(motor)
 	{
@@ -107,9 +126,6 @@ void EncenderPWM(uint8_t motor, int estado)
 		case PWM6:
 			PWM->PWM1MR6 = pulso;
 			PWM->LER_ENA6 = 1;
-			break;
-
-		default:
 			break;
 	}
 }

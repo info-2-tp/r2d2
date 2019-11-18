@@ -26,8 +26,16 @@
 
 
 #define ENABLE_PWM	2,7			//Exp0
-#define DIR_TORRE	1,29		//Exp1
-#define DIR_BASE	4,28		//Exp2
+
+//#define DIR_TORRE	1,29		//Exp1
+//#define DIR_BASE	4,28		//Exp2
+#define DIR_PWM1	1,18		//Exp2
+#define DIR_PWM2	4,28		//Exp2
+#define DIR_PWM3	1,18		//Exp2
+#define DIR_PWM4	1,29		//Exp1
+#define DIR_PWM5	1,18		//Exp1
+#define DIR_PWM6	1,18		//Exp2
+
 typedef struct {
 	union{
 		uint32_t buffer_salidas2;
@@ -38,11 +46,17 @@ typedef struct {
 			__RW uint32_t PWM_4:1;
 			__RW uint32_t PWM_5:1;
 			__RW uint32_t PWM_6:1;
-			__RW uint32_t RESERVE:26;
+			__RW uint32_t PWM_DIR_1:1;
+			__RW uint32_t PWM_DIR_2:1;
+			__RW uint32_t PWM_DIR_3:1;
+			__RW uint32_t PWM_DIR_4:1;
+			__RW uint32_t PWM_DIR_5:1;
+			__RW uint32_t PWM_DIR_6:1;
+			__RW uint32_t PWM_ENABLE:1;
+			__RW uint32_t RESERVE:19;
 		};
 	};
 }Buffer_t;
-
 
 typedef struct{	//campos de bits
 	__RW uint32_t PWM1IR;
@@ -140,4 +154,5 @@ extern volatile Buffer_t buffer_salidas;
 
 void Init_PWM();
 void EncenderPWM(uint8_t motor, int estado);
+void EncenderDireccionPWM(uint8_t motor, uint8_t direciotn);
 

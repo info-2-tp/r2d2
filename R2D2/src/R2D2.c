@@ -26,16 +26,27 @@ int main(void) {
     config();
 
     while(1) {
-    	if (stop_button_active());
-    	if (knifes_tower_on_top()) {
-    		moveteMotorPWM(3, 1, 1);
+    	//for (int i = 0; i < 10000; i++);
+
+    	if (stop_button_active()) {
+    		turnOnPWM(ON);
+    		//printf("STOP!!!\n");
     	} else {
-    		moveteMotorPWM(3, 0, 1);
+    		turnOnPWM(OFF);
+    	}
+    	if (knifes_tower_on_top()) {
+    		//moveteMotorPWM(TOWER_MOTOR, ON, UP);
+    		//printf("CUCHILLAS!!!\n");
+    	} else {
+    		//moveteMotorPWM(TOWER_MOTOR, OFF, DOWN);
     	}
     	if (base_on_init()) {
-    		moveteMotorPWM(3, 1, 0);
+    		moveteMotorPWM(BASE_MOTOR, ON, IZQ);
+    		moveteMotorPWM(TOWER_MOTOR, ON, IZQ);
+    		//printf("BASE!!!\n");
     	} else {
-    		moveteMotorPWM(3, 0, 0);
+    		moveteMotorPWM(BASE_MOTOR, ON, DER);
+    		moveteMotorPWM(TOWER_MOTOR, ON, DER);
     	}
     }
     return 0 ;
