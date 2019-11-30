@@ -68,16 +68,14 @@ void prepare_state() {
         return;
     }
 
-    if ( base_front() && !knifes_top()) move_knife_tower_up();
-
     if (base_front()) base_stop();
 
-    if (knifes_top()) {
-        knife_tower_stop();
-    }
+    if (knifes_top()) knife_tower_stop();
+
+    if ( base_front() && !knifes_top()) move_knife_tower_up();
 
     if (base_front() && knifes_top()) {
-        LCD_Display("Ya se pueden cargar cubos\n", 0, 0);
+        LCD_Display("Cargar cubos\n", 0, 0);
         current_state = LOAD;
         printf("ESTADO --> LOAD\n");
     }
@@ -121,10 +119,9 @@ void measuring_state() {
     }
 
     if(base_back()){
+    	base_stop();
     	init_machine();
     	LCD_Display("No hay cubo\n", 0, 0);
-
-
     }
 }
 
@@ -136,34 +133,19 @@ void obi_wan_com_state() {
         printf("ESTADO --> STOP\n");
         return;
     }
-    if(id_timer<0){
-    	id_timer = startTimer(60,obiwan_ttl,SECONDS);
-    }
 
-    if(obiwan_timeout){
-    	LCD_Display("No hay comunicación\n",0,0);
-    	init_machine();
-    	current_state = PREPARE;
-    	printf("ESTADO --> PREPARE\n");
-    	reset_obiwan_data();
-    	return;
-
+    if (base_front()) {
+    	stop_all();
     }
 
     if(!header_loaded && receive_ready() ){
     	header_loaded = 1;
-
     	receive((void*)routine,header.size);
-
     }
+
     if(header_loaded && !has_data && receive_ready()){
     	has_data=1;
     	cuts = calculate_cuts(routine,header.size/sizeof(routine_t));
-    }
-
-    if (base_front()) {
-    	stop_all();
-
     }
 
     if (has_data && (header.size/sizeof(routine_t)) == 0){
@@ -182,6 +164,19 @@ void obi_wan_com_state() {
         	printf("Corte[%d]: %dmm\n", i, cuts.positions[i]);
         }
         printf("ESTADO --> PREPARE_CUT\n");
+    }
+
+    if(id_timer<0){
+    	id_timer = startTimer(60,obiwan_ttl,SECONDS);
+    }
+
+    if(obiwan_timeout){
+    	LCD_Display("Sin comunicación\n",0,0);
+    	init_machine();
+    	current_state = PREPARE;
+    	printf("ESTADO --> PREPARE\n");
+    	reset_obiwan_data();
+    	return;
     }
 }
 

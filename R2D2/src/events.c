@@ -3,6 +3,9 @@
 //
 
 #include "../inc/PR_buttons.h"
+#include "../inc/actions.h"
+
+message_header_t header;
 
 char base_back() {
     return 0;
