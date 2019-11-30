@@ -7,6 +7,7 @@
 #include "../inc/DR_Systick.h"
 #include "../inc/DR_buttons.h"
 #include "../inc/DR_outputs.h"
+#include "../inc/DR_LCD.h"
 
 void SysTick_Init(void){
 	Systick->STRELOAD = (Systick->STCALIB / 4) - 1; //Base de tiempo dada por 10ms/4: El -1 es porque cuenta uno de mas el STCURR
@@ -21,4 +22,8 @@ void SysTick_Handler(void)
 {
 	input_control();
 	controlarSalidas();
+	sendLCD();
+	if(demoraLCD){
+		demoraLCD--;
+	}
 }

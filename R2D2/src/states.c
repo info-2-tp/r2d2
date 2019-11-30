@@ -10,13 +10,14 @@
 #include "../inc/PR_timer.h"
 #include "../inc/PR_HC_SR04.h"
 #include "../inc/PR_UART0.h"
+#include "../inc/PR_LCD.h"
 #include <stdio.h>
 
 #define 	BASE_DISTANCE 480
 
 
 void LCD_Display(const char *string, unsigned char line ,unsigned char pos) {
-    printf(string);
+	PrintLCD(string,line,pos);
 }
 
 int current_state;
