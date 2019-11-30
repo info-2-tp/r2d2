@@ -57,6 +57,13 @@ uint32_t stopCronometer(uint8_t descriptor) {
 	return stopCronometerInBase(descriptor, MICROSECONDS);
 }
 
+uint32_t getCronometer(uint8_t descriptor) {
+	return stopCronometer(descriptor);
+}
+uint32_t getCronometerInBase(uint8_t descriptor, uint8_t base) {
+	return stopCronometerInBase(descriptor, base);
+}
+
 uint32_t stopCronometerInBase(uint8_t descriptor, uint8_t base) {
 	uint32_t current_time = get_clock();
 	uint32_t cronometer_time = cronometers[descriptor];
@@ -117,6 +124,11 @@ void fastTimer(uint32_t time, Timer_Closure handler) {
 void wait(uint32_t time) {
 	uint32_t ttl = get_clock() + time;
 	while(get_clock() < ttl);
+}
+
+void killTimer(uint8_t descriptor) {
+	pr_timer_t* timer = timers + descriptor;
+	timer->handler = empty_handler;
 }
 
 uint8_t startTimer(uint32_t time, Timer_Handler handler , uint8_t base) {

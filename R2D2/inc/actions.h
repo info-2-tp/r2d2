@@ -31,11 +31,6 @@ typedef struct {
     unsigned int height;
 } routine_t;
 
-typedef struct {
-    unsigned int cant;
-    routine_t *routines;
-} routines_t;
-
 void knifes_stop();
 void knifes_run();
 void move_knife_tower_up();
@@ -47,14 +42,13 @@ void move_base_middle();
 void move_base_front();
 void base_stop();
 
-int measure_size();
 
 void send_info_to_obi_wan(unsigned short cube_size);
 void send_ack_to_obi_wan();
 
 void stop_all();
 
-cuts_t calculate_cuts();
+cuts_t calculate_cuts(const routine_t* vec,unsigned char size);
 
 void next_cut();
 void reset_cut();

@@ -1,3 +1,4 @@
+#include "../inc/DR_tipos.h"
 #define IZQ 0
 #define DER 1
 

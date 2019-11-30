@@ -12,7 +12,7 @@
 
 #define	STOP_BUTTON 				2,10		//SW1
 #define	KNIFES_TOWER_TOP_BUTTON 	1,23		//EXP3
-#define	BASE_INIT_BUTTON 			1,20		//EXP4
+#define	BASE_INIT_BUTTON 			0,19		//EXP5
 #define RUN_BUTTON					0,18		//SW2
 
 typedef struct {

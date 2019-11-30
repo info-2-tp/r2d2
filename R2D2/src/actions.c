@@ -5,10 +5,9 @@
 #include "../inc/actions.h"
 #include "../inc/DR_tipos.h"
 #include "../inc/PR_PWM.h"
+#include "../inc/PR_UART0.h"
 
-extern routines_t routines;
 extern int cube_size;
-extern routines_t routines;
 extern unsigned char has_data;
 extern char current_cut;
 
@@ -41,11 +40,6 @@ void base_stop() {
 	moveteMotorPWM(BASE_MOTOR, OFF, IZQ);
 }
 
-int measure_size() {
-    printf("Midiendo cubo\n");
-    return 300;
-}
-
 void send_info_to_obi_wan(unsigned short cube_size) {
     message_header_t header;
     routine_source_t source;
@@ -55,7 +49,9 @@ void send_info_to_obi_wan(unsigned short cube_size) {
 
     source.block_count = DEFAULT_CUBES;
     source.block_height = cube_size;
-    printf("Comunicacion con obi wan\n");
+
+    send((void*)&header,sizeof(header));
+    send((void*)&source,sizeof(source));
 }
 
 void send_ack_to_obi_wan() {
@@ -72,14 +68,17 @@ void stop_all() {
     turnOnPWM(OFF);
 };
 
-cuts_t calculate_cuts() {
-    cuts_t cuts;
-    cuts.cuts = 5;
-    cuts.positions[0] = 100;
-    cuts.positions[1] = 90;
-    cuts.positions[2] = 80;
-    cuts.positions[3] = 70;
-    cuts.positions[4] = 30;
+cuts_t calculate_cuts( const routine_t* vec,unsigned char size) {
+	cuts_t cuts;
+	cuts.cuts=0;
+    for(int i=0; i < size;i++ ){
+
+    	for(int j=0; j < vec[i].cant;j++ ){
+    		cuts.positions[cuts.cuts+j]= vec[i].height;
+    	}
+    	cuts.cuts += vec[i].cant;
+    }
+
     return cuts;
 }
 
@@ -90,3 +89,7 @@ void next_cut() {
 void reset_cut() {
     current_cut = -1;
 }
+
+
+
+
