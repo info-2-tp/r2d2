@@ -21,7 +21,7 @@ void init_hc_sr04_sensor() {
 	init_hc_sr04();
 }
 distance_t vector[]={
-		590,590,590,590,590,590,590,590,480,480,480,480,330
+		590,590,590,590,590,590,590,590,480,480,480,480,280
 };
 #define MAX 13
 distance_t getDistance(distance_base base) {

@@ -20,18 +20,12 @@ void knifes_run() {
 void move_knife_tower_up() {
 	moveteMotorPWM(TOWER_MOTOR, ON, UP);
 }
-void move_knife_tower_down() {
-	moveteMotorPWM(TOWER_MOTOR, ON, UP);
-}
 void knife_tower_stop() {
 	moveteMotorPWM(TOWER_MOTOR, OFF, UP);
 }
 
 void move_base_back() {
 	moveteMotorPWM(BASE_MOTOR, ON, BACK);
-}
-void move_base_middle() {
-    printf("Mover base hacia el medio\n");
 }
 void move_base_front() {
 	moveteMotorPWM(BASE_MOTOR, ON, FRONT);
@@ -87,7 +81,7 @@ void next_cut() {
 }
 
 void reset_cut() {
-    current_cut = -1;
+    current_cut = 0;
 }
 
 

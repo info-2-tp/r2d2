@@ -18,4 +18,6 @@ uint8_t base_on_init();
 
 uint8_t run_button_active();
 
+uint8_t base_on_end();
+
 #endif /* PR_BUTTONS_H_ */

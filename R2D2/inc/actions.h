@@ -34,11 +34,9 @@ typedef struct {
 void knifes_stop();
 void knifes_run();
 void move_knife_tower_up();
-void move_knife_tower_down();
 void knife_tower_stop();
 
 void move_base_back();
-void move_base_middle();
 void move_base_front();
 void base_stop();
 

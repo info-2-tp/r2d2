@@ -33,5 +33,8 @@ void moveteMotorPWM(int motor,int estado,int direccion)
 }
 
 void turnOnPWM(uint8_t on) {
+	moveteMotorPWM(TOWER_MOTOR, OFF, IZQ);
+	moveteMotorPWM(BASE_MOTOR, OFF, IZQ);
+	moveteMotorPWM(KNIFES_MOTOR, OFF, IZQ);
 	buffer_salidas.PWM_ENABLE = on;
 }

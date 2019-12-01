@@ -12,6 +12,7 @@
 #include "../inc/PR_UART0.h"
 #include "../inc/PR_LCD.h"
 #include <stdio.h>
+#include "../inc/PR_Towercontrol.h"
 
 #define 	BASE_DISTANCE 480
 
@@ -22,7 +23,7 @@ void LCD_Display(const char *string, unsigned char line ,unsigned char pos) {
 
 int current_state;
 cuts_t cuts;
-char current_cut = -1;
+char current_cut = 0;
 int cube_size;
 unsigned char has_data=0;
 int32_t  measure_size;
@@ -75,6 +76,7 @@ void prepare_state() {
     if ( base_front() && !knifes_top()) move_knife_tower_up();
 
     if (base_front() && knifes_top()) {
+    	stop_all();
         LCD_Display("Cargar cubos\n", 0, 0);
         current_state = LOAD;
         printf("ESTADO --> LOAD\n");
@@ -91,6 +93,7 @@ void load_state() {
 
     if ( run_button()) {
     	startTimer(500, measuring, MILLISECONDS);
+    	turnOnPWM(ON);
     	move_base_back();
         current_state = MEASURING;
         printf("ESTADO --> MEASURING\n");
@@ -157,7 +160,8 @@ void obi_wan_com_state() {
     }
 
     if (has_data && (header.size/sizeof(routine_t)) > 0 && base_front()) {
-        move_knife_tower_down();
+    	turnOnPWM(ON);
+    	Tower_Control(BASE_DISTANCE- cube_size);
         reset_obiwan_data();
         current_state = PREPARE_CUT;
         for (int i = 0; i < cuts.cuts; i++) {
@@ -187,9 +191,9 @@ void prepare_cut_state() {
         printf("ESTADO --> STOP\n");
         return;
     }
-
-    if (knifes_are_ready()) {
-        next_cut();
+    if (TowerPosition == (BASE_DISTANCE - cube_size)) {
+    	Tower_Control(cuts.positions[current_cut]);
+    	next_cut();
         current_state = PREPARE_SNIFE;
     }
 }
@@ -203,10 +207,10 @@ void prepare_knife_state() {
         return;
     }
 
-    if (knifes_is_there(cuts.positions[current_cut])) {
+    if (TowerPosition == (TowerPositionOld + cuts.positions[current_cut])) {
         knife_tower_stop();
-        move_base_back();
         knifes_run();
+        move_base_back();
         current_state = CUTTING;
     }
 }
@@ -221,7 +225,7 @@ void cutting_state() {
     }
 
     if (base_back()) {
-        move_base_back();
+    	move_base_front();
         current_state = CUT_RETURNING;
     }
 }
@@ -236,14 +240,15 @@ void cut_returning_state() {
     }
 
     if (base_front()) {
-        next_cut();
+        //
         if (current_cut == cuts.cuts) {
             send_ack_to_obi_wan();
-            LCD_Display("Fin",0,0);
+            //LCD_Display("Fin");
             reset_cut();
             current_state = PREPARE;
         } else {
-            move_knife_tower_down();
+        	Tower_Control(cuts.positions[current_cut]);
+        	next_cut();
             current_state = PREPARE_SNIFE;
         }
 
