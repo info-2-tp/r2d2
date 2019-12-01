@@ -126,11 +126,6 @@ void wait(uint32_t time) {
 	while(get_clock() < ttl);
 }
 
-void killTimer(uint8_t descriptor) {
-	pr_timer_t* timer = timers + descriptor;
-	timer->handler = empty_handler;
-}
-
 uint8_t startTimer(uint32_t time, Timer_Handler handler , uint8_t base) {
 	uint32_t micro_time = timer_in_microseconds(time, base);
 	uint32_t current_time = get_timer_clock();

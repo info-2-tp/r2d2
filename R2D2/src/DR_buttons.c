@@ -14,22 +14,26 @@ extern volatile button_state stop_button;
 extern volatile button_state knifes_tower_top;
 extern volatile button_state base_init;
 extern volatile button_state start_button;
+extern volatile button_state base_end;
 
 void init_buttons() {
 	GPIO_Pinsel ( STOP_BUTTON , PINSEL_GPIO );
 	GPIO_Pinsel ( KNIFES_TOWER_TOP_BUTTON , PINSEL_GPIO );
 	GPIO_Pinsel ( BASE_INIT_BUTTON , PINSEL_GPIO );
 	GPIO_Pinsel ( RUN_BUTTON , PINSEL_GPIO);
+	GPIO_Pinsel ( BASE_END_BUTTON , PINSEL_GPIO);
 
 	GPIO_Dir ( STOP_BUTTON , INPUT );
 	GPIO_Dir ( KNIFES_TOWER_TOP_BUTTON , INPUT );
 	GPIO_Dir ( BASE_INIT_BUTTON , INPUT );
 	GPIO_Dir ( RUN_BUTTON , INPUT );
+	GPIO_Dir ( BASE_END_BUTTON , INPUT );
 
 	GPIO_Mode ( STOP_BUTTON , PULLUP );
 	GPIO_Mode ( KNIFES_TOWER_TOP_BUTTON , PULLUP );
 	GPIO_Mode ( BASE_INIT_BUTTON , PULLUP );
 	GPIO_Mode ( RUN_BUTTON , PULLUP );
+	GPIO_Mode ( BASE_END_BUTTON , PULLUP );
 
 }
 
@@ -39,6 +43,7 @@ void button_state_hw( void )
 	knifes_tower_top.state = !GPIO_Get(KNIFES_TOWER_TOP_BUTTON);
 	base_init.state = !GPIO_Get(BASE_INIT_BUTTON);
 	start_button.state = !GPIO_Get(RUN_BUTTON);
+	base_end.state = !GPIO_Get(BASE_END_BUTTON);
 
 }
 
@@ -62,6 +67,7 @@ void input_control(void) {
 	filter_bounce(&knifes_tower_top);
 	filter_bounce(&base_init);
 	filter_bounce(&start_button);
+	filter_bounce(&base_end);
 }
 
 

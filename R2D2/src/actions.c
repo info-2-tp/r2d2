@@ -68,17 +68,14 @@ void stop_all() {
     turnOnPWM(OFF);
 };
 
-cuts_t calculate_cuts( const routine_t* vec,unsigned char size) {
-	cuts_t cuts;
-	cuts.cuts=0;
-    for(int i=0; i < size;i++ ){
-
-    	for(int j=0; j < vec[i].cant;j++ ){
-    		cuts.positions[cuts.cuts+j]= vec[i].height;
-    	}
-    	cuts.cuts += vec[i].cant;
-    }
-
+cuts_t calculate_cuts() {
+    cuts_t cuts;
+    cuts.cuts = 5;
+    cuts.positions[0] = 100;
+    cuts.positions[1] = 90;
+    cuts.positions[2] = 80;
+    cuts.positions[3] = 70;
+    cuts.positions[4] = 30;
     return cuts;
 }
 
@@ -87,9 +84,9 @@ void next_cut() {
 }
 
 void reset_cut() {
-    current_cut = -1;
+    current_cut = 0;
 }
 
+void reset_obiwan_data(){
 
-
-
+}

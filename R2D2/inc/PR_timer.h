@@ -19,7 +19,6 @@ typedef void (*Timer_Handler)(void);
 
 void initTimer(void);
 uint8_t startTimer(uint32_t time, Timer_Closure handler , uint8_t base );
-void killTimer(uint8_t descriptor);
 void fastTimer(uint32_t time, Timer_Closure handler);
 void wait(uint32_t time);
 uint8_t startCronometer();
