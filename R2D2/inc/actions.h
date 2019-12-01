@@ -48,7 +48,7 @@ void send_ack_to_obi_wan();
 
 void stop_all();
 
-cuts_t calculate_cuts(const routine_t* vec,unsigned char size);
+cuts_t calculate_cuts();
 
 void next_cut();
 void reset_cut();

@@ -11,6 +11,7 @@ volatile button_state stop_button;
 volatile button_state knifes_tower_top;
 volatile button_state base_init;
 volatile button_state start_button;
+volatile button_state base_end;
 
 uint8_t stop_button_active() {
 	return stop_button.current_state;
@@ -26,5 +27,9 @@ uint8_t base_on_init() {
 
 uint8_t run_button_active(){
 	return start_button.current_state;
+}
+
+uint8_t base_on_end() {
+	return base_end.current_state;
 }
 
