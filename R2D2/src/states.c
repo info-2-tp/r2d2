@@ -16,6 +16,7 @@
 #define 	BASE_DISTANCE 480
 #define 	KNIFE_DISTANCE 440
 
+#define	OBI_WAN_TTL 10 //Diez Segundo
 
 void LCD_Display(const char *string, unsigned char line ,unsigned char pos) {
 	PrintLCD(string,line,pos);
@@ -30,7 +31,7 @@ int32_t  measure_size;
 message_header_t header;
 routine_t routine[50];
 uint8_t header_loaded=0;
-short id_timer=-1;
+int id_timer=-1;
 uint8_t obiwan_timeout=0;
 void obiwan_ttl(){
 	obiwan_timeout=1;
@@ -40,7 +41,7 @@ void reset_obiwan_data(){
 	has_data=0;
 	 measure_size=0;
 	 header_loaded=0;
-	 killTimer(id_timer);
+	 if (id_timer >= 0)	killTimer(id_timer);
 	 id_timer=-1;
 	 obiwan_timeout=0;
 }
@@ -173,7 +174,7 @@ void obi_wan_com_state() {
     }
 
     if(id_timer<0){
-    	id_timer = startTimer(60,obiwan_ttl,SECONDS);
+    	id_timer = startTimer(OBI_WAN_TTL,obiwan_ttl,SECONDS);
     }
 
     if(obiwan_timeout){

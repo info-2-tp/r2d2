@@ -27,11 +27,11 @@ typedef struct pr_timer{
 
 pr_timer_t timers[TIMERS_MAX_SIZE];
 pr_timer_t* first_timer = NULL;
-uint8_t current_descriptor = 0;
-uint8_t timer_counter = 0;
+uint16_t current_descriptor = 0;
+uint16_t timer_counter = 0;
 
 uint32_t cronometers[TIMERS_MAX_SIZE];
-uint8_t cronometer_descriptor = 0;
+uint16_t cronometer_descriptor = 0;
 
 void timer_handler_function(void);
 
@@ -46,7 +46,7 @@ uint32_t base_to_microseconds(uint8_t base) {
 	return MICROSECOND;
 }
 
-uint8_t startCronometer() {
+uint16_t startCronometer() {
 	cronometers[cronometer_descriptor] = get_clock();
 	uint8_t descriptor = cronometer_descriptor;
 	cronometer_descriptor = (cronometer_descriptor + 1) % TIMERS_MAX_SIZE;
@@ -80,7 +80,7 @@ void initTimer() {
 	init_timer();
 }
 
-pr_timer_t* initialize_timer(uint8_t descriptor, uint32_t time, Timer_Handler handler) {
+pr_timer_t* initialize_timer(uint16_t descriptor, uint32_t time, Timer_Handler handler) {
 	pr_timer_t* timer = timers + descriptor;
 	timer->time = time;
 	timer->handler = handler;
@@ -126,7 +126,7 @@ void wait(uint32_t time) {
 	while(get_clock() < ttl);
 }
 
-void killTimer(uint8_t descriptor) {
+void killTimer(uint16_t descriptor) {
 	pr_timer_t* timer = timers + descriptor;
 	timer->handler = empty_handler;
 }
@@ -146,7 +146,7 @@ uint8_t startTimer(uint32_t time, Timer_Handler handler , uint8_t base) {
 		}
 	}
 	timer_counter++;
-	uint8_t descriptor = current_descriptor;
+	uint16_t descriptor = current_descriptor;
 	current_descriptor = (current_descriptor + 1) % TIMERS_MAX_SIZE;
 	return descriptor;
 }

@@ -8,11 +8,10 @@ volatile uint16_t TowerPositionOld = 0;
 volatile uint16_t TowerPosition = 0 ;
 
 void Tower_Control ( uint16_t milimeters ){
-	uint16_t aux = 0;
 	LastControl = milimeters;
 	TowerPositionOld += LastControl;
 	moveteMotorPWM(TOWER_MOTOR, ON, DOWN);
-	aux = startTimer( milimeters*STEP, update_tower , MILLISECONDS);
+	startTimer( milimeters*STEP, update_tower , MILLISECONDS);
 }
 
 
