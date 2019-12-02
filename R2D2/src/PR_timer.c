@@ -12,7 +12,7 @@
 #define MILLISECOND 1000
 #define SECOND 1000*1000
 
-#define TIMERS_MAX_SIZE 10
+#define TIMERS_MAX_SIZE 1000
 
 #define PROCESS_TIME 8
 

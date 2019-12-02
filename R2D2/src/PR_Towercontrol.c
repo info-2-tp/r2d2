@@ -11,13 +11,19 @@ void Tower_Control ( uint16_t milimeters ){
 	uint16_t aux = 0;
 	LastControl = milimeters;
 	TowerPositionOld += LastControl;
-	moveteMotorPWM(TOWER_MOTOR, ON, 0);
-	aux = startTimer( milimeters*STEP, update_tower , MICROSECONDS);
+	moveteMotorPWM(TOWER_MOTOR, ON, DOWN);
+	aux = startTimer( milimeters*STEP, update_tower , MILLISECONDS);
 }
 
 
 void update_tower( void )
 {
-	moveteMotorPWM(TOWER_MOTOR, OFF, 0);
+	moveteMotorPWM(TOWER_MOTOR, OFF, DOWN);
 	TowerPosition += LastControl;
+}
+
+void reset_tower( void ) {
+LastControl = 0;
+TowerPositionOld = 0;
+TowerPosition = 0 ;
 }

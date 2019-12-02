@@ -30,9 +30,9 @@
 //#define DIR_TORRE	1,29		//Exp1
 //#define DIR_BASE	4,28		//Exp2
 #define DIR_PWM1	1,18		//Exp2
-#define DIR_PWM2	4,28		//Exp2
+#define DIR_PWM2	4,28		//Exp2	Base
 #define DIR_PWM3	1,18		//Exp2
-#define DIR_PWM4	1,29		//Exp1
+#define DIR_PWM4	1,29		//Exp1	Torre
 #define DIR_PWM5	1,18		//Exp1
 #define DIR_PWM6	1,18		//Exp2
 

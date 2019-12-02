@@ -48,7 +48,7 @@
  /***********************************************************************************************************************************
  *** FUNCIONES GLOBALES AL MODULO
  **********************************************************************************************************************************/
-
+unsigned char numberVector[5];
 
 // 0 para exito -1 para error
 int8_t PushLCD (uint8_t dato , uint8_t control ){
@@ -72,18 +72,57 @@ int8_t PushLCD (uint8_t dato , uint8_t control ){
 
 	return 0;
 }
+
+void PrintLCDNumber(uint32_t number) {
+	unsigned char size = 0;
+	unsigned char numberVector[5];
+
+	if (number < 10) {
+		PushLCD( '0' + number , LCD_DATA );
+		return;
+	}
+
+	while(number != 0) {
+		numberVector[size] = number%10 + '0';
+		number = number/10;
+		size++;
+	}
+
+	while(size) {
+		size--;
+		PushLCD( numberVector[size] , LCD_DATA );
+	}
+}
+
+void PrintLCD_With_Number(uint8_t * message, uint8_t renglon, uint8_t posicion, uint32_t number) {
+	PushLCD(CLEAR_DISPLAY, LCD_CONTROL);
+	PushLCD( renglon + posicion + 0x80 , LCD_CONTROL );
+
+	uint8_t state = 0;
+	for( int i = 0 ; message[ i ] != '\0' ; i++ ){
+		if (message[i] != '%' && message[i] != 'd') {
+			state = 0;
+			PushLCD( message[ i ] , LCD_DATA );
+		}
+		if (message[i] == 'd' && state != 1) {
+			state = 0;
+			PushLCD( message[ i ] , LCD_DATA );
+		}
+		if (message[i] == '%') {
+			state = 1;
+		}
+		if (message[i] == 'd' && state == 1) {
+			PrintLCDNumber(number);
+			state = 0;
+		}
+	}
+}
+
 void PrintLCD(uint8_t * mensaje , uint8_t renglon , uint8_t posicion ){
 	int i = 0;
 
-	switch( renglon ){
-		case RENGLON_1:
-			PushLCD( posicion + 0x80 , LCD_CONTROL );
-			break;
-
-		case RENGLON_2:
-			PushLCD( posicion + 0xC0 , LCD_CONTROL );
-			break;
-	}
+	PushLCD(CLEAR_DISPLAY, LCD_CONTROL);
+	PushLCD( renglon + posicion + 0x80 , LCD_CONTROL );
 
 	for( i = 0 ; mensaje[ i ] != '\0' ; i++ ){
 		PushLCD( mensaje[ i ] , LCD_DATA );

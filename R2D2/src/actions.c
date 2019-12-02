@@ -50,12 +50,11 @@ void send_info_to_obi_wan(unsigned short cube_size) {
 
 void send_ack_to_obi_wan() {
     message_header_t header;
-    routine_source_t source;
 
     header.type = MESSAGE_TYPE_ACK;
     header.size = 0;
 
-    printf("Comunicacion con obi wan - ACK\n");
+    send((void*)&header,sizeof(header));
 }
 
 void stop_all() {
