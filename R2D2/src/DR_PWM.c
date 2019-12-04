@@ -1,18 +1,70 @@
+/*******************************************************************************************************************************//**
+ *
+ * @file	DR_PWM.c
+ * @brief	Drivers de PWM
+ * @date
+ * @author	Cristian Usigas
+ *
+ **********************************************************************************************************************************/
+
+/***********************************************************************************************************************************
+ *** INCLUDES
+ **********************************************************************************************************************************/
 #include "../inc/DR_GPIO.h"
 #include "../inc/DR_PWM.h"
 
-volatile Buffer_t buffer_salidas;
-
+/***********************************************************************************************************************************
+ *** DEFINES PRIVADOS AL MODULO
+ **********************************************************************************************************************************/
 #define PULSE_ON 500
 #define PULSE_OFF 0
+/***********************************************************************************************************************************
+ *** MACROS PRIVADAS AL MODULO
+ **********************************************************************************************************************************/
 
+/***********************************************************************************************************************************
+ *** TIPOS DE DATOS PRIVADOS AL MODULO
+ **********************************************************************************************************************************/
+
+/***********************************************************************************************************************************
+ *** TABLAS PRIVADAS AL MODULO
+ **********************************************************************************************************************************/
+
+/***********************************************************************************************************************************
+ *** VARIABLES GLOBALES PUBLICAS
+ **********************************************************************************************************************************/
+volatile Buffer_t buffer_salidas;
+/***********************************************************************************************************************************
+ *** VARIABLES GLOBALES PRIVADAS AL MODULO
+ **********************************************************************************************************************************/
+
+/***********************************************************************************************************************************
+ *** PROTOTIPO DE FUNCIONES PRIVADAS AL MODULO
+ **********************************************************************************************************************************/
+
+ /***********************************************************************************************************************************
+ *** FUNCIONES PRIVADAS AL MODULO
+ **********************************************************************************************************************************/
+
+ /***********************************************************************************************************************************
+ *** FUNCIONES GLOBALES AL MODULO
+ **********************************************************************************************************************************/
+/**
+	\fn  Init_PWM
+	\brief Configuracion de los pines y registros usados para PWM
+ 	\author Cristian Usigas
+ 	\date
+ 	\param [in]
+ 	\param [out]
+	\return
+*/
 void Init_PWM()
 {
 	*DIR_PCONP |= (1<<6); 		// PowerPWM (PCPWM1 == 6)
 
-	buffer_salidas.PWM_ENABLE = 1;
+	buffer_salidas.PWM_ENABLE = 1;  //deshabilitamos el enable, en el driver DRV8825 el enable viene negado
 
-	//PCLKSEL0 &= ~(3<<12);	//PCLK_PWM1 ponemos los 2 bits en 1 para habilitarlo
+	//PCLKSEL0 &= ~(3<<12);	//PCLK_PWM1 ponemos los 2 bits en 1 para setear el PCLK
 
 	PWM->PWM1PR = PWMPRESCALE;
 
@@ -27,7 +79,7 @@ void Init_PWM()
 	PWM->TCR_PWMENA = 1;
 	PWM->TCR_CountENA = 1;
 
-	//colocamos los pwm todos en single edge
+	//colocamos los pwm  en single edge
 	//PWM->PWMSEL1 = 0;
 	PWM->PWMSEL2 = 0;
 	PWM->PWMSEL3 = 0;
@@ -71,6 +123,16 @@ void Init_PWM()
 	GPIO_Dir(ENABLE_PWM,OUTPUT); //configuro el pin como salida
 }
 
+/**
+	\fn  EncenderDireccionPWM
+	\brief Seleccion del sentido de giro de los motores Paso a Paso
+ 	\author
+ 	\date
+ 	\param [in] motor : numero de motor paso a paso que se desea encender o apagar
+ 	\param [in] direciotn :IZQ / DER para seleccionar giro a izquierda o a derecha
+ 	\param [out]
+	\return
+*/
 void EncenderDireccionPWM(uint8_t motor, uint8_t direciotn) {
 	switch(motor) {
 	case PWM1:
@@ -88,6 +150,16 @@ void EncenderDireccionPWM(uint8_t motor, uint8_t direciotn) {
 	}
 }
 
+/**
+	\fn  EncenderPWM
+	\brief Enciende la señal de PWM depende el motor que uno quiera encender
+ 	\author Cristian Usigas
+ 	\date
+ 	\param [in] motor : numero de motor paso a paso que se desea encender o apagar
+ 	\param [in] estado : ON / OFF para encender o apagar el pulso
+ 	\param [out]
+	\return
+*/
 void EncenderPWM(uint8_t motor, int estado)
 {
 	int pulso;

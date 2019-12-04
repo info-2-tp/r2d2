@@ -95,38 +95,50 @@ void PrintLCDNumber(uint32_t number) {
 }
 
 void PrintLCD_With_Number(uint8_t * message, uint8_t renglon, uint8_t posicion, uint32_t number) {
-	PushLCD(CLEAR_DISPLAY, LCD_CONTROL);
-	PushLCD( renglon + posicion + 0x80 , LCD_CONTROL );
+	PushLCD( renglon + 0x80 , LCD_CONTROL );
 
 	uint8_t state = 0;
-	for( int i = 0 ; message[ i ] != '\0' ; i++ ){
-		if (message[i] != '%' && message[i] != 'd') {
+	int i = 0;
+
+	for(; i < posicion ; i++ ){
+		PushLCD( ' ' , LCD_DATA );
+	}
+	for( ; message[ i - posicion ] != '\0' ; i++ ){
+		if (message[i - posicion] != '%' && message[i - posicion] != 'd') {
 			state = 0;
-			PushLCD( message[ i ] , LCD_DATA );
+			PushLCD( message[ i - posicion] , LCD_DATA );
 		}
-		if (message[i] == 'd' && state != 1) {
+		if (message[i - posicion] == 'd' && state != 1) {
 			state = 0;
-			PushLCD( message[ i ] , LCD_DATA );
+			PushLCD( message[ i - posicion ] , LCD_DATA );
 		}
-		if (message[i] == '%') {
+		if (message[i - posicion] == '%') {
 			state = 1;
 		}
-		if (message[i] == 'd' && state == 1) {
+		if (message[i - posicion] == 'd' && state == 1) {
 			PrintLCDNumber(number);
 			state = 0;
 		}
 	}
+	for(  ; i < 16 ; i++ ){
+				PushLCD( ' ' , LCD_DATA );
+			}
 }
 
 void PrintLCD(uint8_t * mensaje , uint8_t renglon , uint8_t posicion ){
 	int i = 0;
 
-	PushLCD(CLEAR_DISPLAY, LCD_CONTROL);
-	PushLCD( renglon + posicion + 0x80 , LCD_CONTROL );
-
-	for( i = 0 ; mensaje[ i ] != '\0' ; i++ ){
-		PushLCD( mensaje[ i ] , LCD_DATA );
+	//PushLCD(CLEAR_DISPLAY, LCD_CONTROL);
+	PushLCD( renglon + 0x80 , LCD_CONTROL );
+	for(; i < posicion ; i++ ){
+		PushLCD( ' ' , LCD_DATA );
 	}
+	for(; mensaje[ i - posicion] != '\0' ; i++ ){
+		PushLCD( mensaje[ i - posicion ] , LCD_DATA );
+	}
+	for(  ; i <=16 ; i++ ){
+			PushLCD( ' ' , LCD_DATA );
+		}
 }
 
 

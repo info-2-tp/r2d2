@@ -197,6 +197,7 @@ void send_ack_to_obi_wan() {
 
 void stop_all() {
     turnOnPWM(OFF);
+    knifes_stop();
 };
 
 /**

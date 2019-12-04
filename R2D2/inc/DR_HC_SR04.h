@@ -3,7 +3,7 @@
 
 #include "DR_tipos.h"
 
-#define 	ECHO			3,25	//Exp6
+#define 	ECHO			1,22 //Exp8   3,25	//Exp6
 #define		TRIGGER			1,25	//Exp7
 
 void init_hc_sr04(void);
