@@ -32,20 +32,24 @@ typedef struct {
     unsigned short positions[MAX_CUTS];
 } cuts_t;
 
+/* Esta en obi wan
 typedef struct {
     unsigned short type;
     unsigned short size;
 } message_header_t;
+*/
 
 typedef struct {
     unsigned short block_count;
     unsigned short block_height;
 } routine_source_t;
 
+/* Esta en obi_wan
 typedef struct {
     unsigned int cant;
     unsigned int height;
 } routine_t;
+*/
 /***********************************************************************************************************************************
  *** TABLAS PRIVADAS AL MODULO
  **********************************************************************************************************************************/
