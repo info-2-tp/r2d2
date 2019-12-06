@@ -93,7 +93,7 @@ void update_tower( void )
 	\return
 */
 void reset_tower( void ) {
-LastControl = 0;
-TowerPositionOld = 0;
-TowerPosition = 0 ;
+	LastControl = 0;
+	TowerPositionOld = 0;
+	TowerPosition = 0 ;
 }

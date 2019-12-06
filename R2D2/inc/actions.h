@@ -15,8 +15,6 @@
 /***********************************************************************************************************************************
  *** DEFINES PRIVADOS AL MODULO
  **********************************************************************************************************************************/
-#define MESSAGE_TYPE_NEW_REQUEST 1
-#define MESSAGE_TYPE_ACK 3
 #define DEFAULT_CUBES 1
 
 #define MAX_CUTS 100
@@ -82,9 +80,6 @@ void knife_tower_stop();
 void move_base_back();
 void move_base_front();
 void base_stop();
-
-void send_info_to_obi_wan(unsigned short cube_size);
-void send_ack_to_obi_wan();
 
 void stop_all();
 

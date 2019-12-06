@@ -35,5 +35,8 @@ void prepare_knife_state();
 void cutting_state();
 void cut_returning_state();
 
+/****************************** Cross state *******************************/
+void obi_wan_com();
+
 
 #endif //STATES_MACHINE_STATES_H

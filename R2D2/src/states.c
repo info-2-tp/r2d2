@@ -19,6 +19,7 @@
 #include "../inc/PR_UART0.h"
 #include "../inc/PR_LCD.h"
 #include "../inc/PR_Towercontrol.h"
+#include "../inc/obi_wan.h"
 #include <stdio.h>
 
 /***********************************************************************************************************************************
@@ -27,7 +28,6 @@
 #define 	BASE_DISTANCE 490
 #define 	KNIFE_DISTANCE 422
 
-#define	OBI_WAN_TTL 10 //Diez Segundo
 /***********************************************************************************************************************************
  *** MACROS PRIVADAS AL MODULO
  **********************************************************************************************************************************/
@@ -56,9 +56,6 @@ unsigned char has_data=0;
 int32_t  measure_size;
 message_header_t header;
 routine_t routine[50];
-uint8_t header_loaded=0;
-int id_timer=-1;
-uint8_t obiwan_timeout=0;
 uint8_t cube_sizes[50];
 
 int measuring_cube_size = 0;
@@ -66,6 +63,7 @@ int measuring_cube_size = 0;
 uint16_t samples[1000];
 uint16_t samples_size = 0;
 int32_t measuring_timer = -1;
+
 /***********************************************************************************************************************************
  *** PROTOTIPO DE FUNCIONES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
@@ -94,19 +92,6 @@ void LCD_Display(const char *string, unsigned char line ,unsigned char pos) {
 }
 
 /**
-	\fn  obiwan_ttl
-	\brief Modifica un flag para comunicar que la comunicacion por UART fallo
- 	\author
- 	\date
- 	\param [in]
- 	\param [out]
-	\return
-*/
-void obiwan_ttl(){
-	obiwan_timeout=1;
-}
-
-/**
 	\fn  reset_obiwan_data
 	\brief Reinicia los flags de la comunicacion con obiwan
  	\author
@@ -117,10 +102,7 @@ void obiwan_ttl(){
 */
 void reset_obiwan_data(){
 	has_data=0;
-	 measure_size=0;
-	 header_loaded=0;
-	 id_timer=-1;
-	 obiwan_timeout=0;
+	measure_size=0;
 }
 
 /**
@@ -286,9 +268,8 @@ void measuring_state() {
     if (measuring_cube_size > 0 ) {
         move_base_front();
         cube_size = measuring_cube_size;
-        send_info_to_obi_wan(cube_size);
+        send_routine_request_to_obi_wan(cube_size);
         measuring_cube_size = 0;
-        receive((void*)&header,sizeof(header));
         current_state = OBI_WAN_COM;
         PrintLCD_With_Number("Cubo de %dmm", RENGLON_1, 0, cube_size);
         PrintLCD("OBI WAN COM", RENGLON_2, 2);
@@ -318,16 +299,9 @@ void obi_wan_com_state() {
     	stop_all();
     }
 
-    if(!header_loaded && receive_ready() ){
-    	header_loaded = 1;
-    	receive((void*)routine,header.size);
-    }
-
-    if(header_loaded && !has_data && receive_ready()){
-    	has_data=1;
-    	if (id_timer >= 0) {
-    		killTimer(id_timer);
-    	}
+    if (are_new_routine()) {
+    	has_data = READY;
+    	load_routine(&header, &routine);
     	cuts = calculate_cuts(routine,header.size/sizeof(routine_t));
     }
 
@@ -347,19 +321,6 @@ void obi_wan_com_state() {
         current_state = PREPARE_CUT;
         PrintLCD("PREPARE CUT", RENGLON_2, 2);
         return;
-    }
-
-    if(id_timer<0){
-    	id_timer = startTimer(OBI_WAN_TTL,obiwan_ttl,SECONDS);
-    }
-
-    if(obiwan_timeout){
-    	PrintLCD("Sin comunicación", RENGLON_1, 0);
-    	init_machine();
-    	current_state = PREPARE;
-    	PrintLCD("PREPARE", RENGLON_2, 4);
-    	reset_obiwan_data();
-    	return;
     }
 }
 
@@ -491,6 +452,7 @@ void cut_returning_state() {
 */
 void state_machine() {
     state_functions[current_state]();
+    obi_wan_com();
 }
 
 /**
@@ -508,6 +470,34 @@ void init_machine() {
     move_base_front();
     current_state = PREPARE;
     PrintLCD("PREPARE", RENGLON_2, 4);
+}
+
+void reset_measuring() {
+	samples_size = 0;
+	cube_size = 0;
+	measuring_cube_size = 0;
+}
+
+void resetAll() {
+	reset_measuring();
+	reset_obiwan_data();
+	reset_cut();
+	reset_tower();
+}
+
+void obi_wan_com() {
+	obi_wan_listen();
+	if (obi_wan_timeout()) {
+		resetAll();
+		if (current_state != STOP) {
+			init_machine();
+		}
+		PrintLCD("No hay comunicacion", RENGLON_1, 0);
+	}
+
+	if (obi_wan_restore()) {
+		PrintLCD("Obi Wan Listo!", RENGLON_1, 0);
+	}
 }
 
 
