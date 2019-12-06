@@ -354,7 +354,7 @@ void obi_wan_com_state() {
     }
 
     if(obiwan_timeout){
-    	PrintLCD("Sin comunicación", RENGLON_1, 0);
+    	PrintLCD("Sin comunicacion", RENGLON_1, 0);
     	init_machine();
     	current_state = PREPARE;
     	PrintLCD("PREPARE", RENGLON_2, 4);
