@@ -20,4 +20,10 @@ uint8_t run_button_active();
 
 uint8_t base_on_end();
 
+uint8_t emergency_button_active();
+
+uint8_t up_button_active();
+
+uint8_t down_button_active();
+
 #endif /* PR_BUTTONS_H_ */

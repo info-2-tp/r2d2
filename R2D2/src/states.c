@@ -181,7 +181,7 @@ void (*state_functions[])() = {prepare_state, load_state, stop_state, measuring_
 	\return
 */
 void stop_state() {
-    if ( run_button()) {
+    if ( know_run_button()) {
     	init_machine();
     }
 }
@@ -196,7 +196,7 @@ void stop_state() {
 	\return
 */
 void prepare_state() {
-    if (emergency_button()) {
+    if (know_stop_button()) {
         stop_all();
         current_state = STOP;
         PrintLCD("STOP", RENGLON_2, 5);
@@ -227,14 +227,14 @@ void prepare_state() {
 	\return
 */
 void load_state() {
-    if (emergency_button()) {
+    if (know_stop_button()) {
         stop_all();
         current_state = STOP;
         PrintLCD("STOP", RENGLON_2, 5);
         return;
     }
 
-    if ( run_button()) {
+    if ( know_run_button()) {
     	measuring_timer = startTimer(100, measuring, MILLISECONDS);
     	turnOnPWM(ON);
     	move_base_back();
@@ -257,7 +257,7 @@ void load_state() {
 */
 void measuring_state() {
 
-    if (emergency_button()) {
+    if (know_stop_button()) {
         stop_all();
         samples_size = 0;
         cube_size = 0;
@@ -306,7 +306,7 @@ void measuring_state() {
 */
 void obi_wan_com_state() {
 
-    if (emergency_button()) {
+    if (know_stop_button()) {
         stop_all();
         current_state = STOP;
         reset_obiwan_data();
@@ -373,7 +373,7 @@ void obi_wan_com_state() {
 	\return
 */
 void prepare_cut_state() {
-    if (emergency_button()) {
+    if (know_stop_button()) {
         stop_all();
         current_state = STOP;
         PrintLCD("STOP", RENGLON_2, 5);
@@ -397,7 +397,7 @@ void prepare_cut_state() {
 	\return
 */
 void prepare_knife_state() {
-    if (emergency_button()) {
+    if (know_stop_button()) {
         stop_all();
         current_state = STOP;
         PrintLCD("STOP", RENGLON_2, 5);
@@ -426,7 +426,7 @@ void prepare_knife_state() {
 	\return
 */
 void cutting_state() {
-    if (emergency_button()) {
+    if (know_stop_button()) {
         stop_all();
         current_state = STOP;
         PrintLCD("STOP", RENGLON_2, 5);
@@ -452,7 +452,7 @@ void cutting_state() {
 	\return
 */
 void cut_returning_state() {
-    if (emergency_button()) {
+    if (know_stop_button()) {
         stop_all();
         current_state = STOP;
         PrintLCD("STOP", RENGLON_2, 5);
