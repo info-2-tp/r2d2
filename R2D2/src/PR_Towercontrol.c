@@ -61,10 +61,11 @@ volatile uint16_t TowerPosition = 0 ;
  	\param [out]
 	\return
 */
-void Tower_Control ( uint16_t milimeters ){
+void Tower_Control ( uint16_t milimeters , uint8_t direction ){
 	LastControl = milimeters;
+	if(direction== UP)LastControl * (-1);
 	TowerPositionOld += LastControl;
-	moveteMotorPWM(TOWER_MOTOR, ON, DOWN);
+	moveteMotorPWM(TOWER_MOTOR, ON, direction);
 	startTimer( milimeters*STEP, update_tower , MILLISECONDS);
 }
 

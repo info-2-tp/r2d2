@@ -63,6 +63,7 @@
 #define	KNIFES_TOWER_TOP_BUTTON 	1,23		//EXP3
 #define	BASE_INIT_BUTTON 			0,19		//EXP5
 #define BASE_END_BUTTON				1,20		//EXP4
+#define CUBE_PRESENCE_BUTTON		4,29		//ED1 ENTRADA DIGITAL 1
 
 typedef struct {
 	uint8_t state;

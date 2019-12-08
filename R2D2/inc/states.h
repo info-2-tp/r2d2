@@ -14,6 +14,9 @@
 #define 	PREPARE_SNIFE	6
 #define 	CUTTING	7
 #define 	CUT_RETURNING	8
+#define 	CALIBRATION		9
+
+//#define		EMERGENCY 9
 /**
 *	\fn void state_machine()
 *	\brief Resumen
@@ -34,6 +37,11 @@ void prepare_cut_state();
 void prepare_knife_state();
 void cutting_state();
 void cut_returning_state();
+//void emergency_state();
+void red_blink_off(void);
+void red_blink_on(void);
+
+void calibration_state(void);
 
 
 #endif //STATES_MACHINE_STATES_H

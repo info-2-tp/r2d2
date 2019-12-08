@@ -38,6 +38,7 @@ volatile button_state base_end;
 volatile button_state emergency_button;
 volatile button_state up_button;
 volatile button_state down_button;
+volatile button_state presence_button;
 
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PRIVADAS AL MODULO
@@ -159,5 +160,18 @@ uint8_t run_button_active(){
 */
 uint8_t base_on_end() {
 	return base_end.current_state;
+}
+
+/**
+	\fn  up_button_active
+	\brief devuelve el estado del boton up_button
+ 	\author
+ 	\date
+ 	\param [in]
+ 	\param [out]
+	\return
+*/
+uint8_t detect_cube() {
+	return presence_button.current_state;
 }
 

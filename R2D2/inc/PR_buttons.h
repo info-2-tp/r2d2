@@ -26,4 +26,6 @@ uint8_t up_button_active();
 
 uint8_t down_button_active();
 
+uint8_t detect_cube();
+
 #endif /* PR_BUTTONS_H_ */

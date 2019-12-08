@@ -15,9 +15,11 @@ extern uint8_t buffer_relay[4];
 
 //defines
 
-#define 	RELAY0		2,0
-#define 	RELAY1		0,23
-#define 	RELAY2		0,21
+#define 	RELAY0		2,0 //cuchi
+#define 	RELAY1		0,23//rojo
+#define 	RELAY2		0,21//verde
+#define 	RELAY3		0,27//azul
+
 
 
 
