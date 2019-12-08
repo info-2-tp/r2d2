@@ -203,6 +203,13 @@ void prepare_state() {
         return;
     }
 
+    if(know_emergency_button()){
+    		stop_all();
+    		init_machine();
+            current_state = STOP;
+            PrintLCD("EMERGENCY STOP", RENGLON_2, 1);
+    	}
+
     if (base_front()) base_stop();
 
     if (knifes_top()) knife_tower_stop();
@@ -233,6 +240,13 @@ void load_state() {
         PrintLCD("STOP", RENGLON_2, 5);
         return;
     }
+
+    if(know_emergency_button()){
+    		stop_all();
+    		init_machine();
+            current_state = STOP;
+            PrintLCD("EMERGENCY STOP", RENGLON_2, 1);
+    	}
 
     if ( know_run_button()) {
     	measuring_timer = startTimer(100, measuring, MILLISECONDS);
@@ -266,6 +280,13 @@ void measuring_state() {
         PrintLCD("STOP", RENGLON_2, 5);
         return;
     }
+
+    if(know_emergency_button()){
+    		stop_all();
+    		init_machine();
+            current_state = STOP;
+            PrintLCD("EMERGENCY STOP", RENGLON_2, 1);
+    	}
 
     if(base_back()){
     	killTimer(measuring_timer);
@@ -313,6 +334,13 @@ void obi_wan_com_state() {
         PrintLCD("STOP", RENGLON_2, 5);
         return;
     }
+
+    if(know_emergency_button()){
+    		stop_all();
+    		init_machine();
+            current_state = STOP;
+            PrintLCD("EMERGENCY STOP", RENGLON_2, 1);
+    	}
 
     if (base_front()) {
     	stop_all();
@@ -379,6 +407,14 @@ void prepare_cut_state() {
         PrintLCD("STOP", RENGLON_2, 5);
         return;
     }
+
+    if(know_emergency_button()){
+    		stop_all();
+    		init_machine();
+            current_state = STOP;
+            PrintLCD("EMERGENCY STOP", RENGLON_2, 1);
+    	}
+
     if (TowerPosition == (KNIFE_DISTANCE - cube_size)) {
     	Tower_Control(cuts.positions[current_cut]);
     	next_cut();
@@ -405,6 +441,13 @@ void prepare_knife_state() {
         reset_tower();
         return;
     }
+
+    if(know_emergency_button()){
+    		stop_all();
+    		init_machine();
+            current_state = STOP;
+            PrintLCD("EMERGENCY STOP", RENGLON_2, 1);
+    	}
 
     if (TowerPosition == TowerPositionOld) {
         knife_tower_stop();
@@ -435,6 +478,13 @@ void cutting_state() {
         return;
     }
 
+    if(know_emergency_button()){
+    		stop_all();
+    		init_machine();
+            current_state = STOP;
+            PrintLCD("EMERGENCY STOP", RENGLON_2, 1);
+    	}
+
     if (base_back()) {
     	move_base_front();
         current_state = CUT_RETURNING;
@@ -460,6 +510,13 @@ void cut_returning_state() {
         reset_tower();
         return;
     }
+
+    if(know_emergency_button()){
+    		stop_all();
+    		init_machine();
+            current_state = STOP;
+            PrintLCD("EMERGENCY STOP", RENGLON_2, 1);
+    	}
 
     if (base_front()) {
         //
