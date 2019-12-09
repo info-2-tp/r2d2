@@ -32,10 +32,7 @@
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PUBLICAS
  **********************************************************************************************************************************/
-uint8_t loading;
-uint8_t* buffer_loading;
-uint32_t buffer_size;
-uint32_t buffer_loaded = 0;
+
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PRIVADAS AL MODULO
  **********************************************************************************************************************************/
@@ -115,39 +112,4 @@ void send(void * buffer, int size){
 	for(int i = 0; i<size;i++){
 		UART0_PushTX((unsigned char)aux[i]);
 	}
-}
-
-/**
-	\fn  receive_ready
-	\brief
- 	\author	Eduardo Maticorena
- 	\date
- 	\param [in]
- 	\param [out]
-	\return
-*/
-uint8_t receive_ready() {
-	if (buffer_loaded == buffer_size) return 1;
-
-	int dato = UART0_PopRX();
-	if (dato == -1) return 0;
-	buffer_loading[buffer_loaded] = (uint8_t)dato;
-	buffer_loaded++;
-	return buffer_loaded == buffer_size;
-}
-
-/**
-	\fn  receive
-	\brief
- 	\author Eduardo Maticorena
- 	\date
- 	\param [in] buffer : datos a recibir
- 	\param [in] size : tamaño del buffer de datos que se va a recibir
- 	\param [out]
-	\return
-*/
-void receive(void * buffer, int size){
-	buffer_loading = (uint8_t *)buffer;
-	buffer_size = size;
-	buffer_loaded=0;
 }

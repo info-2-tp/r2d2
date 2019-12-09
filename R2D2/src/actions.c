@@ -144,47 +144,7 @@ void move_base_front() {
 void base_stop() {
 	moveteMotorPWM(BASE_MOTOR, OFF, IZQ);
 }
-/**
-	\fn  send_info_to_obi_wan
-	\brief Envia la medicion del cubo por UART a la app para calcular el trabajo
- 	\author Julian Mastroiacovo
- 	\date ${date}
- 	\param [in] cube_size tamaño del cubo a cortar
- 	\param [out]
-	\return
-*/
 
-void send_info_to_obi_wan(unsigned short cube_size) {
-    message_header_t header;
-    routine_source_t source;
-
-    header.type = MESSAGE_TYPE_NEW_REQUEST;
-    header.size = sizeof(routine_source_t);
-
-    source.block_count = DEFAULT_CUBES;
-    source.block_height = cube_size;
-
-    send((void*)&header,sizeof(header));
-    send((void*)&source,sizeof(source));
-}
-/**
-	\fn  send_ack_to_obi_wan
-	\brief Descripcion *****
- 	\author
- 	\date
- 	\param [in]
- 	\param [out]
-	\return
-*/
-
-void send_ack_to_obi_wan() {
-    message_header_t header;
-
-    header.type = MESSAGE_TYPE_ACK;
-    header.size = 0;
-
-    send((void*)&header,sizeof(header));
-}
 /**
 	\fn  stop_all
 	\brief Detiene todos los motores de la maquina

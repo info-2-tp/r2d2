@@ -43,5 +43,8 @@ void red_blink_on(void);
 
 void calibration_state(void);
 
+/****************************** Cross state *******************************/
+void obi_wan_com();
+
 
 #endif //STATES_MACHINE_STATES_H
