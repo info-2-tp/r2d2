@@ -56,10 +56,14 @@
 
 
 #define	STOP_BUTTON 				2,10		//SW1
+#define RUN_BUTTON					0,18		//SW2
+#define	EMERGENCY_BUTTON 			0,11		//SW3
+#define UP_BUTTON					2,13		//SW4
+#define DOWN_BUTTON					1,26		//SW5
 #define	KNIFES_TOWER_TOP_BUTTON 	1,23		//EXP3
 #define	BASE_INIT_BUTTON 			0,19		//EXP5
-#define RUN_BUTTON					0,18		//SW2
 #define BASE_END_BUTTON				1,20		//EXP4
+#define CUBE_PRESENCE_BUTTON		4,29		//ED1 ENTRADA DIGITAL 1
 
 typedef struct {
 	uint8_t state;

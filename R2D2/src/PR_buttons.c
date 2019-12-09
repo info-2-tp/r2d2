@@ -35,6 +35,10 @@ volatile button_state knifes_tower_top;
 volatile button_state base_init;
 volatile button_state start_button;
 volatile button_state base_end;
+volatile button_state emergency_button;
+volatile button_state up_button;
+volatile button_state down_button;
+volatile button_state presence_button;
 
 /***********************************************************************************************************************************
  *** VARIABLES GLOBALES PRIVADAS AL MODULO
@@ -54,7 +58,7 @@ volatile button_state base_end;
 
 /**
 	\fn  stop_button_active
-	\brief devuelve el estado del boton stop_button
+	\brief devuelve el estado del boton stop_button1
  	\author
  	\date
  	\param [in]
@@ -64,6 +68,47 @@ volatile button_state base_end;
 uint8_t stop_button_active() {
 	return stop_button.current_state;
 }
+
+/**
+	\fn  emergency_button_active
+	\brief devuelve el estado del boton emergency_button
+ 	\author
+ 	\date
+ 	\param [in]
+ 	\param [out]
+	\return
+*/
+uint8_t emergency_button_active() {
+	return emergency_button.current_state;
+}
+
+/**
+	\fn  up_button_active
+	\brief devuelve el estado del boton up_button
+ 	\author
+ 	\date
+ 	\param [in]
+ 	\param [out]
+	\return
+*/
+uint8_t up_button_active() {
+	return up_button.current_state;
+}
+
+/**
+	\fn  down_button_active
+	\brief devuelve el estado del boton down_button
+ 	\author
+ 	\date
+ 	\param [in]
+ 	\param [out]
+	\return
+*/
+uint8_t down_button_active() {
+	return down_button.current_state;
+}
+
+
 
 /**
 	\fn  knifes_tower_on_top
@@ -115,5 +160,18 @@ uint8_t run_button_active(){
 */
 uint8_t base_on_end() {
 	return base_end.current_state;
+}
+
+/**
+	\fn  up_button_active
+	\brief devuelve el estado del boton up_button
+ 	\author
+ 	\date
+ 	\param [in]
+ 	\param [out]
+	\return
+*/
+uint8_t detect_cube() {
+	return presence_button.current_state;
 }
 
