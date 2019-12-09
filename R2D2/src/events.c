@@ -88,16 +88,53 @@ char base_front() {
 }
 
 /**
-	\fn  emergency_button
-	\brief Control del boton de pare de emergencia
+	\fn   know_stop_button
+	\brief Control del boton de stop
  	\author
  	\date
  	\param [in]
  	\param [out]
-	\return Devuelve el estado del boton de pare de emergencia
+	\return Devuelve el estado del boton de stop
 */
-char emergency_button() {
+char know_stop_button() {
     return stop_button_active();
+}
+
+/**
+	\fn  know_emergency_button
+	\brief Control del boton de emergencia
+ 	\author
+ 	\date
+ 	\param [in]
+ 	\param [out]
+	\return Devuelve el estado del boton de emergencia
+*/
+char know_emergency_button(){
+	return emergency_button_active();
+}
+/**
+	\fn  know_up_button
+	\brief Control del boton de arriba
+ 	\author
+ 	\date
+ 	\param [in]
+ 	\param [out]
+	\return Devuelve el estado del boton arriba
+*/
+char know_up_button(){
+	return up_button_active();
+}
+/**
+	\fn  know_down_button
+	\brief Control del boton abajo
+ 	\author
+ 	\date
+ 	\param [in]
+ 	\param [out]
+	\return Devuelve el estado del boton abajo
+*/
+char know_down_button(){
+	return down_button_active();
 }
 
 /**
@@ -122,7 +159,7 @@ char knifes_top() {
  	\param [out]
 	\return	devuelve el estado del boton RUN
 */
-char run_button() {
+char know_run_button() {
     return run_button_active();
 }
 

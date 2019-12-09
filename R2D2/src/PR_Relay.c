@@ -64,3 +64,17 @@ void relay_control(uint32_t RelayID,uint32_t Action)
 	buffer_relay[RelayID] = Action;
 	active_relay();
 }
+
+
+void set_color(uint8_t color){
+	if(color==4){
+		relay_control(ROJO,OFF);
+		relay_control(AZUL,OFF);
+		relay_control(VERDE,OFF);
+	}
+	else{
+
+		relay_control(color,ON);
+	}
+
+}

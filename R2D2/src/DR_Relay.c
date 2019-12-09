@@ -59,8 +59,18 @@ uint8_t buffer_relay[4];
 void init_Relay(void)
 {
 	GPIO_Pinsel(RELAY0, PINSEL_GPIO);
+	GPIO_Pinsel(RELAY1, PINSEL_GPIO);
+	GPIO_Pinsel(RELAY2, PINSEL_GPIO);
+	GPIO_Pinsel(RELAY3, PINSEL_GPIO);
 	GPIO_Dir( RELAY0 , OUTPUT);
+	GPIO_Dir( RELAY1 , OUTPUT);
+	GPIO_Dir( RELAY2 , OUTPUT);
+	GPIO_Dir( RELAY3 , OUTPUT);
 	GPIO_Set(RELAY0,OFF);
+	GPIO_Set(RELAY1,OFF);
+	GPIO_Set(RELAY2,OFF);
+	GPIO_Set(RELAY3,OFF);
+
 }
 
 /**
@@ -90,6 +100,9 @@ void active_relay(void)
 			case 2:
 				GPIO_Set(RELAY2,ON);
 				break;
+			case 3:
+				GPIO_Set(RELAY3,ON);
+				break;
 			}
 		}
 		else if(!buffer_relay[i])
@@ -104,6 +117,9 @@ void active_relay(void)
 				break;
 			case 2:
 				GPIO_Set(RELAY2,OFF);
+				break;
+			case 3:
+				GPIO_Set(RELAY3,OFF);
 				break;
 			}
 		}
